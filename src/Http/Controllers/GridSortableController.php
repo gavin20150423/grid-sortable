@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcat\Admin\Extension\GridSortable\Http\Controllers;
+namespace Dcat\Admin\GridSortable\Http\Controllers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
@@ -24,14 +24,12 @@ class GridSortableController extends Controller
             );
 
         try {
-            $sorts->each(function ($v, $k) use ($repository, $column) {
-                $form = new Form(new $repository);
-
-                $form->text($column);
-
-                $form->update($k, [$column => $v]);
-            });
-
+            $models = $repository::find($sorts->keys());
+            foreach ($models as $model) {
+                $column = data_get($model->sortable, 'order_column_name', 'order_column');
+                $model->{$column} = $sorts->get($model->getKey());
+                $model->save();
+            }
         } catch (\Exception $exception) {
             $status  = false;
             $message = $exception->getMessage();

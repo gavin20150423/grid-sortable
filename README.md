@@ -1,66 +1,43 @@
 
 <div align="center">
 
-# DCAT-ADMIN GRID-SORTABLE
+# DCAT-ADMIN GRID-SORTABLE 拖曳排序
 
 </div>
 
-这个插件可以帮助你通过拖动数据列表的行来进行排序，前端基于[SortableJS](https://github.com/SortableJS/Sortable), 后端基于[eloquent-sortable](https://github.com/spatie/eloquent-sortable)。
 
+<h3>适用于dcat-admin 2.x版本。</h3>
 
-![sortable](https://raw.githubusercontent.com/jqhph/dcat-admin-grid-sortable/docs/img/grid-sortable.png)
+<h4>背景</h4>
+<div>由于原插件是1.x版本的。2.x版本的这个插件，原作者貌似没有维护升级，正好我的一个项目使用了，有拖曳排序的需求，所以就动手撸了一个。</div>
 
-## 安装
-
-```shell
-composer require dcat-admin-extension/grid-sortable -vvv
-```
-
-然后打开`http://yourhost/admin/helpers/extensions`，依次点击`启用`和`导入`。
-
-## 使用
-
-修改模型
-
-```php
-<?php
-
-use Illuminate\Database\Eloquent\Model;
-use Spatie\EloquentSortable\Sortable;
-use Spatie\EloquentSortable\SortableTrait;
-
-class MyModel extends Model implements Sortable
-{
+<h4>安装</h4>
+<div>
+<ul>
+    <li>下载zip压缩包，打开扩展管理页面，点击本地安装按钮选择提交上传安装包</li>
+    <li>点击更新至1.0.0版本</li>
+    <li>启动插件</li>
+    <li>
+    需要使用拖曳排序的Model中增加:
     use SortableTrait;
 
     public $sortable = [
-        'order_column_name' => 'order_column',
+        'order_column_name' => 'order',
         'sort_when_creating' => true,
     ];
-}
-```
 
-在表格中使用
+    在对应的grid中增加:
+    $grid->sortable();
+    </li>
 
-```php
-$grid = new Grid(new MyModel());
+    <li>大功告成!!</li>
+</ul>
+</div>
 
-$grid->sortable();
-```
+<div>有问题可以联系我，QQ：215543942，或者提交issue</div>
 
-## 翻译
 
-在对应的语言种类文件夹下的`global.php`中可以修改按钮文本，以简体中文为例：翻译文件是`resources/lang/zh-CN.json`
-```php
-return [
-    'fields' => [...],
-    'labels' => [
-        ...
-        'Save order' => '保存排序',
-    ],
-];
-```
 
-License
-------------
-Licensed under [The MIT License (MIT)](LICENSE).
+
+
+

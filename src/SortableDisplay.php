@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcat\Admin\Extension\GridSortable;
+namespace Dcat\Admin\GridSortable;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
@@ -8,25 +8,32 @@ use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
 class SortableDisplay extends AbstractDisplayer
 {
     protected static $js = [
-        'vendors/dcat-admin-extensions/grid-sortable/sortable.min.js',
+        'vendor/dcat-admin-extensions/grid-sortable/js/sortable2025.js',
     ];
 
     protected function script()
     {
+        $css = <<<CSS
+        .blue-background-class {
+            background-color: #C8EBFB!important;
+        }
+CSS;
+        Admin::style($css);
         $id = $this->grid->getTableId();
-
         $script = <<<JS
-new Sortable($("#{$id} tbody")[0], {
-    handle: '.grid-sortable-handle', // handle's class
-    animation: 150,
-    onUpdate: function () {
-        var sorts = [], tb = $('#{$id}');
-        tb.find('.grid-sortable-handle').each(function () {
-            sorts.push($(this).data());
+        new Sortable($("#{$id} tbody")[0], {
+            handle: '.grid-sortable-handle', // handle's class
+            animation: 150,
+            placeholder: "sort-highlight",
+            ghostClass: 'blue-background-class',
+            onUpdate: function () {
+                var sorts = [], tb = $('#{$id}');
+                tb.find('.grid-sortable-handle').each(function () {
+                    sorts.push($(this).data());
+                });
+                tb.closest('.row').first().find('.grid-save-order-btn').data('sort', sorts).show();
+            },
         });
-        tb.closest('.row').first().find('.grid-save-order-btn').data('sort', sorts).show();
-    },
-});
 JS;
 
         Admin::script($script);
