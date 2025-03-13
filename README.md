@@ -17,8 +17,9 @@
     <li>下载zip压缩包，打开扩展管理页面，点击本地安装按钮选择提交上传安装包</li>
     <li>点击更新至1.0.0版本</li>
     <li>启动插件</li>
-    <li>
+
     需要使用拖曳排序的Model中增加:
+    
     use SortableTrait;
 
     public $sortable = [
@@ -28,11 +29,9 @@
 
     在对应的grid中增加:
     $grid->sortable();
-    </li>
-
-    <li>大功告成!!</li>
 </ul>
 </div>
+<div>这样就大功告成了~</div>
 
 <div>有问题可以联系我，QQ：215543942，或者提交issue</div>
 
