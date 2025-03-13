@@ -29,6 +29,12 @@
 
     在对应的grid中增加:
     $grid->sortable();
+
+    注意：
+    数据库中的排序字段，需要初始化为不相同的数值，否则拖曳无效。可以参考sql语句(以tablename为表名,order为排序字段举例)
+    SET @row_number = 0;
+    UPDATE tablename 
+    SET `order` = (@row_number:=@row_number + 1);
 </ul>
 </div>
 <div>这样就大功告成了~</div>
